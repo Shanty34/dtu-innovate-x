@@ -1,5 +1,6 @@
 import {
   Alert,
+  ImageBackground,
   KeyboardAvoidingView,
   Pressable,
   StyleSheet,
@@ -18,7 +19,8 @@ const LoginScreen = ({ navigation }) => {
     async function checkToken() {
       const token = await AsyncStorage.getItem("accessToken");
       if (token) {
-        navigation.replace("HomeScreen");
+        console.log("Navigating to product page from useEffect");
+        navigation.replace("OnboardingScreen");
       }
     }
     checkToken();
@@ -40,9 +42,10 @@ const LoginScreen = ({ navigation }) => {
         console.log({ reftoken });
         //Storing token to device
         AsyncStorage.setItem("accessToken", token).then(() =>
-          AsyncStorage.setItem("refreshToken", reftoken).then(() =>
-            navigation.replace("HomeScreen")
-          )
+          AsyncStorage.setItem("refreshToken", reftoken).then(() => {
+            console.log("Navigating to product page");
+            navigation.replace("OnboardingScreen");
+          })
         );
 
         //Navigating to Home Screen
@@ -53,87 +56,100 @@ const LoginScreen = ({ navigation }) => {
       });
   }
   return (
-    <View
+    <ImageBackground
       style={{
         flex: 1,
-        backgroundColor: "white",
-        padding: 10,
+        width: "100%",
+        height: "100%",
+        justifyContent: "center",
         alignItems: "center",
       }}
+      source={require("../assets/backgroundGradient.png")}
     >
-      <KeyboardAvoidingView behavior="position">
-        <View
-          style={{
-            marginTop: 100,
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
-          <Text
-            style={{
-              fontSize: 17,
-              fontWeight: "600",
-              color: "#4A55A2",
-            }}
-          >
-            Sign In
-          </Text>
-          <Text
-            style={{
-              marginTop: 15,
-              fontSize: 17,
-              fontWeight: "600",
-            }}
-          >
-            Sign-in to Your Account
-          </Text>
-        </View>
-        <View style={{ marginTop: 15 }}>
-          <Input
-            title="Email"
-            placeholder="Enter your email"
-            stateManager={setEmail}
-            value={email}
-          />
-          <Input
-            title="Password"
-            placeholder="Enter your password"
-            stateManager={setPassword}
-            value={password}
-            isSecure={true}
-          />
-          <Button onPress={loginHandler}>Login</Button>
-
+      <View
+        style={{
+          flex: 1,
+          backgroundColor: "transparent",
+          padding: 10,
+          alignItems: "center",
+        }}
+      >
+        <KeyboardAvoidingView>
           <View
             style={{
-              flexDirection: "row",
-              marginTop: 20,
+              marginTop: 150,
               alignItems: "center",
               justifyContent: "center",
             }}
           >
             <Text
               style={{
-                color: "gray",
-                fontSize: 16,
+                fontSize: 30,
+                fontWeight: "600",
+                color: "#1a85ffff",
+                marginBottom: 50,
               }}
             >
-              Don't have an account?{" "}
+              Sign In
             </Text>
-            <Pressable onPress={() => navigation.replace("RegisterScreen")}>
+            <Text
+              style={{
+                marginTop: 15,
+                fontSize: 17,
+                fontWeight: "600",
+                color: "white",
+              }}
+            >
+              Sign-in to Your Account
+            </Text>
+          </View>
+          <View style={{ marginTop: 15 }}>
+            <Input
+              title="Email"
+              placeholder="Enter your email"
+              stateManager={setEmail}
+              value={email}
+            />
+            <Input
+              title="Password"
+              placeholder="Enter your password"
+              stateManager={setPassword}
+              value={password}
+              isSecure={true}
+            />
+            <Button onPress={loginHandler}>Login</Button>
+
+            <View
+              style={{
+                flexDirection: "row",
+                marginTop: 20,
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
               <Text
                 style={{
+                  color: "white",
                   fontSize: 16,
-                  color: "#4A55A2",
                 }}
               >
-                Sign-up
+                Don't have an account?{" "}
               </Text>
-            </Pressable>
+              <Pressable onPress={() => navigation.replace("RegisterScreen")}>
+                <Text
+                  style={{
+                    fontSize: 16,
+                    color: "#1a85ffff",
+                  }}
+                >
+                  Sign-up
+                </Text>
+              </Pressable>
+            </View>
           </View>
-        </View>
-      </KeyboardAvoidingView>
-    </View>
+        </KeyboardAvoidingView>
+      </View>
+    </ImageBackground>
   );
 };
 

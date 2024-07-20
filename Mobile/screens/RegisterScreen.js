@@ -1,5 +1,6 @@
 import {
   Alert,
+  ImageBackground,
   KeyboardAvoidingView,
   Pressable,
   StyleSheet,
@@ -40,7 +41,7 @@ const RegisterScreen = ({ navigation }) => {
       );
 
       if (response.status === 201) {
-        Alert.alert("Register Done");
+        navigation.replace("OnboardingScreen");
       }
     } catch (error) {
       console.log("error in sending the message", error);
@@ -94,99 +95,112 @@ const RegisterScreen = ({ navigation }) => {
       });
   }
   return (
-    <View
+    <ImageBackground
       style={{
         flex: 1,
-        backgroundColor: "white",
-        padding: 10,
+        width: "100%",
+        height: "100%",
+        justifyContent: "center",
         alignItems: "center",
       }}
+      source={require("../assets/backgroundGradient.png")}
     >
-      <KeyboardAvoidingView behavior="position">
-        <View
-          style={{
-            marginTop: 100,
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
-          <Text
-            style={{
-              fontSize: 17,
-              fontWeight: "600",
-              color: "#4A55A2",
-            }}
-          >
-            Sign Up
-          </Text>
-          <Text
-            style={{
-              marginTop: 15,
-              fontSize: 17,
-              fontWeight: "600",
-            }}
-          >
-            Create a New Account
-          </Text>
-        </View>
-        <View style={{ marginTop: 15 }}>
-          <Input
-            title="Name"
-            placeholder="Enter your name"
-            stateManager={setName}
-            value={name}
-          />
-          <Input
-            title="Username"
-            placeholder="Enter a username"
-            stateManager={setUsername}
-            value={username}
-          />
-          <Input
-            title="Email"
-            placeholder="Enter your email"
-            stateManager={setEmail}
-            value={email}
-          />
-          <Input
-            title="Password"
-            placeholder="Enter your password"
-            stateManager={setPassword}
-            value={password}
-            isSecure={true}
-          />
-          <Button onPress={pickImage}>Select Avatar</Button>
-          <Button onPress={handleSend}>Register</Button>
+      <View
+        style={{
+          flex: 1,
+          backgroundColor: "transparent",
+          padding: 10,
+          alignItems: "center",
+        }}
+      >
+        <KeyboardAvoidingView behavior="position">
           <View
             style={{
-              flexDirection: "row",
-              marginTop: 20,
+              marginTop: 100,
               alignItems: "center",
               justifyContent: "center",
             }}
           >
             <Text
               style={{
-                color: "gray",
-                fontSize: 16,
+                fontSize: 30,
+                fontWeight: "600",
+                color: "#1a85ffff",
+                marginBottom: 0,
               }}
             >
-              Already have an account?{" "}
+              Sign Up
             </Text>
-            <Pressable onPress={() => navigation.replace("LoginScreen")}>
+            <Text
+              style={{
+                marginTop: 15,
+                fontSize: 17,
+                fontWeight: "600",
+                color: "white",
+              }}
+            >
+              Create a New Account
+            </Text>
+          </View>
+          <View style={{ marginTop: 15 }}>
+            <Input
+              title="Name"
+              placeholder="Enter your name"
+              stateManager={setName}
+              value={name}
+            />
+            <Input
+              title="Username"
+              placeholder="Enter a username"
+              stateManager={setUsername}
+              value={username}
+            />
+            <Input
+              title="Email"
+              placeholder="Enter your email"
+              stateManager={setEmail}
+              value={email}
+            />
+            <Input
+              title="Password"
+              placeholder="Enter your password"
+              stateManager={setPassword}
+              value={password}
+              isSecure={true}
+            />
+            <Button onPress={pickImage}>Upload your photo</Button>
+            <Button onPress={handleSend}>Register</Button>
+            <View
+              style={{
+                flexDirection: "row",
+                marginTop: 20,
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
               <Text
                 style={{
+                  color: "white",
                   fontSize: 16,
-                  color: "#4A55A2",
                 }}
               >
-                Sign-in
+                Already have an account?{" "}
               </Text>
-            </Pressable>
+              <Pressable onPress={() => navigation.replace("LoginScreen")}>
+                <Text
+                  style={{
+                    fontSize: 16,
+                    color: "#1a85ffff",
+                  }}
+                >
+                  Sign-in
+                </Text>
+              </Pressable>
+            </View>
           </View>
-        </View>
-      </KeyboardAvoidingView>
-    </View>
+        </KeyboardAvoidingView>
+      </View>
+    </ImageBackground>
   );
 };
 

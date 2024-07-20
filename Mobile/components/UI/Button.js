@@ -5,10 +5,10 @@ const Button = ({ children, onPress }) => {
   return (
     <View
       style={{
-        borderRadius: 6,
-        marginTop: 70,
+        borderRadius: 25,
+        marginTop: 40,
         width: 200,
-        backgroundColor: "#4A55A2",
+        backgroundColor: "#1a85ffff",
         marginHorizontal: "auto",
         overflow: "hidden",
       }}

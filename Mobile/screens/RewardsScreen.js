@@ -2,8 +2,7 @@ import { View, Text, ImageBackground, ScrollView } from "react-native";
 import React from "react";
 import Header from "../components/UI/Header";
 import Cards from "../components/UI/Cards";
-
-const HomeScreen = () => {
+const RewardsScreen = () => {
   return (
     <ImageBackground
       style={{
@@ -15,7 +14,7 @@ const HomeScreen = () => {
       source={require("../assets/backgroundGradient.png")}
     >
       <Header />
-      <ScrollView horizontal style={{ maxHeight: 300 }}>
+      <ScrollView>
         <Cards />
         <Cards />
       </ScrollView>
@@ -23,4 +22,4 @@ const HomeScreen = () => {
   );
 };
 
-export default HomeScreen;
+export default RewardsScreen;
