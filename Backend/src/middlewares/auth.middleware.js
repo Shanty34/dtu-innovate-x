@@ -2,7 +2,7 @@ import { ApiError } from "../utils/ApiError.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
 import jwt from "jsonwebtoken";
 import cookieParser from "cookie-parser";
-// import { User } from "../models/user.models.js";
+import { User } from "../models/User.models.js";
 
 
 export const verifyJWT=asyncHandler(async(req,res,next)=>{
