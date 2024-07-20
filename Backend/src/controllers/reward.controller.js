@@ -6,6 +6,7 @@ import { asyncHandler } from "../utils/asyncHandler.js";
 import { Reward } from "../models/rewards.models.js";
 import { uploadOnCloudinary } from "../utils/cloudinary.js";
 import { RewardTransaction } from "../models/rewardTransaction.models.js";
+import { Transaction } from "../models/transaction.models.js";
 
 const RewardHistory=asyncHandler(async (req, res) => {
     const history=await User.aggregate([
@@ -118,10 +119,44 @@ const fetchRewardsByInterest=asyncHandler(async(req,res)=>{
     res.status(201)
     .json(new ApiResponse(201,fetchedReward,"Reward fetched by Interest"))
 })
+
+const postTransaction=asyncHandler(async(req,res)=>{
+    const {trans_coin, transaction_title}=req.body;
+    if(!(trans_coin && transaction_title)) throw new piError(404,"Complete Transaction Details not given");
+    
+    const user=await User.findById(req.user._id);
+    if(!user) throw new ApiError(404,"User Not Found");
+
+    const coin=user.coins-trans_coin;
+    if (coin<0) throw new ApiError(401,"Insufficent Level Coins for Transaction")
+    const result=User.updateOne({id:req.user._id},{coins:coin})
+
+    if(!result) throw new ApiError("Coins not updated");
+    res.status(201)
+
+    const transaction=await Transaction.create({
+        transaction_title,
+        owner:req.user._id,
+        trans_coin:trans_coin*(-1)
+    })
+    if(!transaction) throw new ApiError("Transaction Not Created")
+
+    res.status(201)
+    .json(new ApiResponse(201,transaction,"Transaction Updated"))
+})
+const getAllTransactions=asyncHandler(async(req,res)=>{
+    const allTransactions=await Transaction.find({owner:req.user._id});
+    if(!allTransactions) throw new ApiError(404,"Not Transaction found");
+    
+    res.status(200)
+    .json(new ApiResponse(200,allTransactions,"All Transactions Fetched"))
+})
 export {
     RewardHistory,
     RewardPost,
     postRewardTrans,
     getReward,
-    fetchRewardsByInterest
+    fetchRewardsByInterest,
+    postTransaction,
+    getAllTransactions
 }
