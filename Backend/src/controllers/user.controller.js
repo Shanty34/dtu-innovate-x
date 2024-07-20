@@ -67,7 +67,7 @@ const registerUser = asyncHandler(async (req, res) => {
   const user = await User.create({
     fullname: fullName,
     avatar: avatar?.url || "",
-    email,
+    email:email.toLowerCase(),
     password,
     username: userName?.toLowerCase(),
   });
@@ -99,7 +99,8 @@ const loginUser = asyncHandler(async (req, res) => {
   //     field?.trim()==="")){
   //     throw new ApiError(400,"All fields are required")
   // }
-  const userExits = await User.findOne({ email });
+  const loweredEmail=email.toLowerCase()
+  const userExits = await User.findOne({ loweredEmail});
   if (!userExits) throw new ApiError(409, "User does not exist");
   console.log(userExits);
 
