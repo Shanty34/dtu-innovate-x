@@ -91,7 +91,7 @@ const loginUser = asyncHandler(async (req, res) => {
   // If it does exist then we check whether password is correct or not
   // then we return with 200 , (access and refresh token)-> via cookies
   const { userName, email, password } = req.body;
-  console.log(email, password);
+  // console.log(email, password);
   if (!(userName || email))
     throw new ApiError(400, "Username or email is required");
 
@@ -100,7 +100,8 @@ const loginUser = asyncHandler(async (req, res) => {
   //     throw new ApiError(400,"All fields are required")
   // }
   const loweredEmail=email.toLowerCase()
-  const userExits = await User.findOne({ loweredEmail});
+  const userExits = await User.findOne({ email:loweredEmail});
+  
   if (!userExits) throw new ApiError(409, "User does not exist");
   console.log(userExits);
 
