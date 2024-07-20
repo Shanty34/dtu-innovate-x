@@ -22,6 +22,15 @@ const userSchemas=new mongoose.Schema({
     },
     avatar:{
         type:String,
+    },
+    interest:{
+        type:String,
+        enum:["Tech","Education","Health","Food","Fashion"],
+        required:true
+    },
+    coins:{
+        type:Number,
+        default:0
     }
 },{timestamps:true})
 

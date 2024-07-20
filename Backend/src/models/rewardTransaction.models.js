@@ -25,4 +25,4 @@ const rewardTransactionSchema=new mongoose.Schema({
     }
 },{timestamps:true})
 
-const RewardTransaction=mongoose.model("RewardTransaction",rewardTransactionSchema)
+ export const RewardTransaction=mongoose.model("RewardTransaction",rewardTransactionSchema)
