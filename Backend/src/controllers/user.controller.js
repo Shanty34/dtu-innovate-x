@@ -224,73 +224,12 @@ const changeCurrentPassword = asyncHandler(async (req, res) => {
 });
 
 const getCurrentUser = asyncHandler(async (req, res) => {
-  const channel = await User.aggregate([
-    {
-      $match: {
-        _id: new mongoose.Types.ObjectId(req.user._id),
-      },
-    },
-    {
-      $lookup: {
-        from: "subscriptions",
-        localField: "_id",
-        foreignField: "channel",
-        as: "subscribers",
-      },
-    },
-    {
-      $lookup: {
-        from: "subscriptions",
-        localField: "_id",
-        foreignField: "subscriber",
-        as: "subscribedTo",
-      },
-    },
-    {
-      $lookup: {
-        from: "bids",
-        localField: "_id",
-        foreignField: "owner",
-        as: "bidsMade",
-      },
-    },
-    {
-      $lookup: {
-        from: "investors",
-        localField: "_id",
-        foreignField: "owner",
-        as: "InvestedC",
-      },
-    },
-    {
-      $addFields: {
-        subscribersCount: {
-          $size: "$subscribers",
-        },
-        channelsSubscribedToCount: {
-          $size: "$subscribedTo",
-        },
-        bidsMadeCount: {
-          $size: "$bidsMade",
-        },
-        InvestedCompanyCount: {
-          $size: "$InvestedC",
-        },
-        isSubscribed: {
-          $cond: {
-            if: { $in: [req.user?._id, "$subscribers.subscriber"] },
-            then: true,
-            else: false,
-          },
-        },
-      },
-    },
-  ]);
-  console.log(channel);
+  const user = await User.findById(req.user._id)
+  console.log(user);
   return res
     .status(200)
     .json(
-      new ApiResponse(200, channel[0], "Current User Fetched Successfully")
+      new ApiResponse(200, user, "Current User Fetched Successfully")
     );
 });
 
