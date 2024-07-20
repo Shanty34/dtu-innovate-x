@@ -10,13 +10,56 @@ import React, { useState } from "react";
 import Input from "../components/Register/Input";
 import Button from "../components/UI/Button";
 import axios from "axios";
+import * as ImagePicker from "expo-image-picker";
 
 const RegisterScreen = ({ navigation }) => {
   const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
   const [image, setImage] = useState("");
 
+  const handleSend = async () => {
+    try {
+      const formData = new FormData();
+      formData.append("email", email);
+      formData.append("userName", username);
+      formData.append("fullName", name);
+      formData.append("password", password);
+      formData.append("avatar", {
+        uri: imageUri,
+        name: "image.jpg",
+        type: "image/jpeg",
+      });
+
+      //if the message type id image or a normal text
+
+      const response = await axios.post(
+        "http://192.168.1.7:8000/messages",
+        formData
+      );
+
+      if (response.status === 201) {
+        Alert.alert("Register Done");
+      }
+    } catch (error) {
+      console.log("error in sending the message", error);
+    }
+  };
+
+  const pickImage = async () => {
+    // No permissions request is necessary for launching the image library
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+
+    if (!result.canceled) {
+      setImage(result.assets[0].uri);
+    }
+  };
   function registerHandler() {
     // Collecting form information
     const user = {
@@ -94,6 +137,12 @@ const RegisterScreen = ({ navigation }) => {
             value={name}
           />
           <Input
+            title="Username"
+            placeholder="Enter a username"
+            stateManager={setUsername}
+            value={username}
+          />
+          <Input
             title="Email"
             placeholder="Enter your email"
             stateManager={setEmail}
@@ -106,13 +155,8 @@ const RegisterScreen = ({ navigation }) => {
             value={password}
             isSecure={true}
           />
-          <Input
-            title="Image"
-            placeholder="Enter your image"
-            stateManager={setImage}
-            value={image}
-          />
-          <Button onPress={registerHandler}>Register</Button>
+          <Button onPress={pickImage}>Select Avatar</Button>
+          <Button onPress={handleSend}>Register</Button>
           <View
             style={{
               flexDirection: "row",
