@@ -102,7 +102,7 @@ const postRewardTrans=asyncHandler(async(req,res)=>{
     const rewardTransac=await RewardTransaction.create({
         owner:req.user._id,
         reward:reward_id,
-        task_id:TaskArray
+        taskCompleted:TaskArray
     })
 
     res.status(201)
@@ -118,10 +118,69 @@ const fetchRewardsByInterest=asyncHandler(async(req,res)=>{
     res.status(201)
     .json(new ApiResponse(201,fetchedReward,"Reward fetched by Interest"))
 })
+
+const checkRewardCompleted=asyncHandler(async(req,res)=>{
+    const {reward_id}=req.body;
+//    const currentReward = await RewardTransaction.findOne({reward:req.body.reward_id,owner:req.user._id});
+//    if(!currentReward) throw new ApiError(404,"NO reward found");
+
+//    if(currentReward.completed==true){
+        const new_coins=await RewardTransaction.aggregate([
+            {
+                $match:{
+                    reward:new mongoose.Types.ObjectId(reward_id),
+                    owner:new mongoose.Types.ObjectId(req.user._id),
+                    completed:true
+                }
+
+            },
+            {
+                $lookup:{
+                    from:"users",
+                    localField:"owner",
+                    foreignField:"_id",
+                    as:"user"
+                }
+            },
+            {
+                $lookup:{
+                    from:"rewards",
+                    localField:"reward",
+                    foreignField:"_id",
+                    as:"rewardTool"
+                }
+            },
+            {
+                $unwind: "$user"
+            },
+            {
+                $unwind: "$rewardTool"
+            },
+            {
+                $addFields:{
+                    updatedcoins:{ $add: ["$user.coins", "$rewardTool.coins"] }
+                }
+            },
+            {
+                $project:{
+                    updatedcoins:1
+                }
+            }
+        ])
+        if(!new_coins) throw new ApiError(409,"Reward is yet to be completed");
+        const update=await User.updateOne({_id:req.user._id},{coins:new_coins[0].updatedcoins})
+        if(!update) throw new ApiError(409,"Reward is yet to be completed");
+
+    res.status(201)
+    .json(new ApiResponse(201,update,"Coins Updated Successfuly"))
+   
+})
+
 export {
     RewardHistory,
     RewardPost,
     postRewardTrans,
     getReward,
-    fetchRewardsByInterest
+    fetchRewardsByInterest,
+    checkRewardCompleted
 }
