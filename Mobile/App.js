@@ -3,6 +3,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { StatusBar } from "expo-status-bar";
 import LoginScreen from "./screens/LoginScreen";
 import RegisterScreen from "./screens/RegisterScreen";
+import HomeScreen from "./screens/HomeScreen";
 
 const Stack = createStackNavigator();
 
@@ -22,6 +23,13 @@ export default function App() {
           <Stack.Screen
             name="RegisterScreen"
             component={RegisterScreen}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="HomeScreen"
+            component={HomeScreen}
             options={{
               headerShown: false,
             }}

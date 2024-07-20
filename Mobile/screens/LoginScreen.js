@@ -9,20 +9,20 @@ import {
 import React, { useEffect, useState } from "react";
 
 import axios from "axios";
-// import AsyncStorage from "@react-native-async-storage/async-storage";
 import Input from "../components/Register/Input";
 import Button from "../components/UI/Button";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const LoginScreen = ({ navigation }) => {
-  // useEffect(() => {
-  //   async function checkToken() {
-  //     const token = await AsyncStorage.getItem("authToken");
-  //     if (token) {
-  //       navigation.replace("HomeScreen");
-  //     }
-  //   }
-  //   checkToken();
-  // }, []);
+  useEffect(() => {
+    async function checkToken() {
+      const token = await AsyncStorage.getItem("accessToken");
+      if (token) {
+        navigation.replace("HomeScreen");
+      }
+    }
+    checkToken();
+  }, []);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -31,22 +31,26 @@ const LoginScreen = ({ navigation }) => {
       email: email,
       password: password,
     };
-    // axios
-    //   .post("http://192.168.1.7:8000/login", user)
-    //   .then((response) => {
-    //     const token = response.data.token;
+    axios
+      .post("http://192.168.13.45:8000/api/v1/users/login", user)
+      .then((response) => {
+        const token = response.data.data.accessToken;
+        const reftoken = response.data.data.refreshToken;
+        console.log({ token });
+        console.log({ reftoken });
+        //Storing token to device
+        AsyncStorage.setItem("accessToken", token).then(() =>
+          AsyncStorage.setItem("refreshToken", reftoken).then(() =>
+            navigation.replace("HomeScreen")
+          )
+        );
 
-    //     //Storing token to device
-    //     AsyncStorage.setItem("authToken", token).then(() =>
-    //       navigation.replace("HomeScreen")
-    //     );
-
-    //     //Navigating to Home Screen
-    //   })
-    //   .catch((e) => {
-    //     console.log(e);
-    //     Alert.alert("Login error", "Invalid Email or Password");
-    //   });
+        //Navigating to Home Screen
+      })
+      .catch((e) => {
+        console.log(e);
+        Alert.alert("Login error", "Invalid Email or Password");
+      });
   }
   return (
     <View

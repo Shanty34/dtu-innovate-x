@@ -27,7 +27,7 @@ const RegisterScreen = ({ navigation }) => {
       formData.append("fullName", name);
       formData.append("password", password);
       formData.append("avatar", {
-        uri: imageUri,
+        uri: image,
         name: "image.jpg",
         type: "image/jpeg",
       });
@@ -35,7 +35,7 @@ const RegisterScreen = ({ navigation }) => {
       //if the message type id image or a normal text
 
       const response = await axios.post(
-        "http://192.168.1.7:8000/messages",
+        "http://192.168.13.45:8000/api/v1/users/register",
         formData
       );
 
