@@ -40,11 +40,11 @@ const registerUser = asyncHandler(async (req, res) => {
   // 7. check for user creation
   // 8. return res
 
-  const { fullName, userName, email, category, companyName, password } =
+  const { fullName, userName, email, interest, password } =
     req.body;
 
   if (
-    [fullName, userName, email, category, companyName, password].some(
+    [fullName, userName, email, interest, password].some(
       (field) => field?.trim() === ""
     )
   ) {
@@ -67,8 +67,9 @@ const registerUser = asyncHandler(async (req, res) => {
   const user = await User.create({
     fullname: fullName,
     avatar: avatar?.url || "",
-    email,
+    email:email.toLowerCase(),
     password,
+    interest,
     username: userName?.toLowerCase(),
   });
   console.log(user);
@@ -91,7 +92,7 @@ const loginUser = asyncHandler(async (req, res) => {
   // If it does exist then we check whether password is correct or not
   // then we return with 200 , (access and refresh token)-> via cookies
   const { userName, email, password } = req.body;
-  console.log(email, password);
+  // console.log(email, password);
   if (!(userName || email))
     throw new ApiError(400, "Username or email is required");
 
@@ -99,7 +100,9 @@ const loginUser = asyncHandler(async (req, res) => {
   //     field?.trim()==="")){
   //     throw new ApiError(400,"All fields are required")
   // }
-  const userExits = await User.findOne({ email });
+  const loweredEmail=email.toLowerCase()
+  const userExits = await User.findOne({ email:loweredEmail});
+  
   if (!userExits) throw new ApiError(409, "User does not exist");
   console.log(userExits);
 
@@ -222,73 +225,12 @@ const changeCurrentPassword = asyncHandler(async (req, res) => {
 });
 
 const getCurrentUser = asyncHandler(async (req, res) => {
-  const channel = await User.aggregate([
-    {
-      $match: {
-        _id: new mongoose.Types.ObjectId(req.user._id),
-      },
-    },
-    {
-      $lookup: {
-        from: "subscriptions",
-        localField: "_id",
-        foreignField: "channel",
-        as: "subscribers",
-      },
-    },
-    {
-      $lookup: {
-        from: "subscriptions",
-        localField: "_id",
-        foreignField: "subscriber",
-        as: "subscribedTo",
-      },
-    },
-    {
-      $lookup: {
-        from: "bids",
-        localField: "_id",
-        foreignField: "owner",
-        as: "bidsMade",
-      },
-    },
-    {
-      $lookup: {
-        from: "investors",
-        localField: "_id",
-        foreignField: "owner",
-        as: "InvestedC",
-      },
-    },
-    {
-      $addFields: {
-        subscribersCount: {
-          $size: "$subscribers",
-        },
-        channelsSubscribedToCount: {
-          $size: "$subscribedTo",
-        },
-        bidsMadeCount: {
-          $size: "$bidsMade",
-        },
-        InvestedCompanyCount: {
-          $size: "$InvestedC",
-        },
-        isSubscribed: {
-          $cond: {
-            if: { $in: [req.user?._id, "$subscribers.subscriber"] },
-            then: true,
-            else: false,
-          },
-        },
-      },
-    },
-  ]);
-  console.log(channel);
+  const user = await User.findById(req.user._id)
+  console.log(user);
   return res
     .status(200)
     .json(
-      new ApiResponse(200, channel[0], "Current User Fetched Successfully")
+      new ApiResponse(200, user, "Current User Fetched Successfully")
     );
 });
 
