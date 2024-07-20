@@ -97,8 +97,9 @@ const loginUser = asyncHandler(async (req, res) => {
     if (!userExits) throw new ApiError(409, "User does not exist");
     // console.log(userExits)
 
-    const isPasswordValid = await userExits.isPasswordCorrect(password);
-    if (!isPasswordValid) throw new ApiError(401, "Invalid user credentials");
+    // const isPasswordValid = await userExits.isPasswordCorrect(password);
+    // console.log(password,userExits.password)
+    if (!(password===userExits.password)) throw new ApiError(401, "Invalid user credentials");
 
     const { accessToken, refreshToken } = await generateAccessAndRefreshTokens(userExits._id)
     const loggedInUser = await User.findById(userExits._id).select("-password -refreshToken")
