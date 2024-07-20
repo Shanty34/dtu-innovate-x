@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 
 const rewardsSchema= new mongoose.Schema({
-    Image:{
+    image:{
         type:String,
         required:true
     },
@@ -10,7 +10,7 @@ const rewardsSchema= new mongoose.Schema({
         type:String,
         required:true,
     },
-    discription:{
+    description:{
         type:String,
         required:true,
     },

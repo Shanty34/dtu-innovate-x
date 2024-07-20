@@ -4,10 +4,10 @@ const taskSchema=new mongoose.Schema({
         type:String,
         required:true
     },
-    Description:{
+    description:{
         type:String,
         required:true
     }
 },{timestamps:true})
 
-const Task=mongoose.model("Task",taskSchema);
+export const Task=mongoose.model("Task",taskSchema);
