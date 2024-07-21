@@ -4,7 +4,9 @@ import Header from "../components/UI/Header";
 import Cards from "../components/UI/Cards";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
+import { useAppContext } from "../context/UserContext";
 const RewardsScreen = () => {
+  const {coin,setCoin}=useAppContext()
   const shop_card=[
     {
       _id:"12",
@@ -46,7 +48,8 @@ const RewardsScreen = () => {
         }
       })
       .then((res)=>{
-        console.log(res.data.data)
+        setCoin(res.data.data.coin)
+
       })
       .catch((err)=>{
         console.log("Transaction_Error :",err)

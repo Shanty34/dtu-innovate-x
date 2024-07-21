@@ -13,12 +13,15 @@ import axios from "axios";
 import Input from "../components/Register/Input";
 import Button from "../components/UI/Button";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useAppContext } from "../context/UserContext";
 
 const LoginScreen = ({ navigation }) => {
+  const {setToken}=useAppContext()
   useEffect(() => {
     async function checkToken() {
       const token = await AsyncStorage.getItem("accessToken");
       if (token) {
+        setToken(token)
         console.log("Navigating to product page from useEffect");
         navigation.replace("OnboardingScreen");
       }

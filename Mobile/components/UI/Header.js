@@ -1,12 +1,13 @@
 import { View, Text, Image, Pressable } from "react-native";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { AntDesign } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
+import { useAppContext } from "../../context/UserContext";
 const Header = () => {
   const navigation = useNavigation();
-  const [coin, setCoin]=useState(0)
+  const {coin, setCoin}=useAppContext()
   useEffect(()=>{
     async function getCurrentCoin(){
       const token=await AsyncStorage.getItem('accessToken')
@@ -16,6 +17,7 @@ const Header = () => {
         }
       })
       .then((res)=>{
+        console.log(res.data.data.coins)
         setCoin(res.data.data.coins)
       })
       .catch((err)=>{
@@ -23,7 +25,7 @@ const Header = () => {
       })
     }
     getCurrentCoin();
-  },[])
+  },[coin])
   return (
     <View
       style={{

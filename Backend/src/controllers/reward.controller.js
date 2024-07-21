@@ -178,7 +178,7 @@ const checkRewardCompleted=asyncHandler(async(req,res)=>{
             }
         ])
         if(!new_coins) throw new ApiError(409,"Reward is yet to be completed");
-        const update=await User.updateOne({_id:req.user._id},{coins:new_coins[0].updatedcoins})
+        const update=await User.findOneAndUpdate({_id:req.user._id},{coins:new_coins[0].updatedcoins},{new:true,runValidators:true})
         if(!update) throw new ApiError(409,"Reward is yet to be completed");
 
     res.status(201)
@@ -195,7 +195,7 @@ const postTransaction=asyncHandler(async(req,res)=>{
 
     const coin=user.coins-trans_coin;
     if (coin<0) throw new ApiError(401,"Insufficent Level Coins for Transaction");
-    const result=await User.findOneAndUpdate({_id:req.user._id},{coins:coin})
+    const result=await User.findOneAndUpdate({_id:req.user._id},{coins:coin},{new:true})
     console.log(result)
     if(!result) throw new ApiError("Coins not updated");
 
@@ -207,7 +207,7 @@ const postTransaction=asyncHandler(async(req,res)=>{
     if(!transaction) throw new ApiError("Transaction Not Created")
 
     res.status(201)
-    .json(new ApiResponse(201,transaction,"Transaction Updated"))
+    .json(new ApiResponse(201,result,"Transaction Updated"))
 })
 const getAllTransactions=asyncHandler(async(req,res)=>{
     const allTransactions=await Transaction.find({owner:req.user._id});

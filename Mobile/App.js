@@ -10,6 +10,7 @@ import ProfileScreen from "./screens/ProfileScreen";
 import RewardsScreen from "./screens/RewardsScreen";
 import StoreScreen from "./screens/StoreScreen";
 import CommunityScreen from "./screens/CommunityScreen";
+import { AppProvider } from './context/UserContext.js';
 import {
   MaterialIcons,
   MaterialCommunityIcons,
@@ -86,7 +87,7 @@ export default function App() {
   return (
     <>
       <StatusBar style="light" />
-
+      <AppProvider>
       <NavigationContainer>
         <Stack.Navigator>
           <Stack.Screen
@@ -126,6 +127,7 @@ export default function App() {
           />
         </Stack.Navigator>
       </NavigationContainer>
+      </AppProvider>
     </>
   );
 }

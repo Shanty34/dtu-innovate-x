@@ -1,20 +1,23 @@
 import { View, Text, ImageBackground, ScrollView } from "react-native";
-import React,{useState,useEffect} from "react";
+import React,{useState,useEffect, useContext} from "react";
 import Header from "../components/UI/Header";
 import Cards from "../components/UI/Cards";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
+import { useAppContext } from "../context/UserContext";
 const RewardsScreen = () => {
   const [rewards,setRewards]=useState()
+  const {coin,setCoin,token}=useAppContext()
   useEffect(()=>{
     async function fetchRewardsByInterest(){
-      const token=await AsyncStorage.getItem('accessToken')
+      console.log(token)
       await axios.get(`http://192.168.13.82:8000/api/v1/reward/fetch-reward-interest`,{
         headers:{
           Authorization: `Bearer ${token}`
         }
       })
       .then((res)=>{
+        console.log(res.data.data)
         setRewards(res.data.data)
       })
       .catch((err)=>{
@@ -25,7 +28,6 @@ const RewardsScreen = () => {
   },[])
 
   async function postCompleteReward(data){
-    const token=await AsyncStorage.getItem('accessToken')
     await axios.post(`http://192.168.13.82:8000/api/v1/reward/reward-completed`,
       {reward_id:data._id},
       {
@@ -34,7 +36,8 @@ const RewardsScreen = () => {
       }
     })
     .then((res)=>{
-      console.log(res.data.data)
+      // console.log(res.data.data)
+      setCoin(res.data.data.coin)
     })
     .catch((err)=>{
       console.log("Complete_Reward_Error :",err)
@@ -52,8 +55,8 @@ const RewardsScreen = () => {
     >
       <Header />
       <ScrollView>
-       {rewards && rewards.map(data=>(
-        <Cards onPress={(e)=>postCompleteReward(data)} key={data.id} title={data.title} bg_color={data.bg_color} description={data.description} imageUrl={data.image} />
+       {rewards && rewards.map((data,i)=>(
+        <Cards onPress={(e)=>postCompleteReward(data)} key={i} title={data.title} bg_color={data.bg_color} description={data.description} imageUrl={data.image} />
        ))}
       </ScrollView>
     </ImageBackground>

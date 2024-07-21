@@ -3,14 +3,15 @@ import React, { useEffect, useState } from "react";
 import Button from "../components/UI/Button";
 import axios from "axios"; 
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useAppContext } from "../context/UserContext";
 
 const ProfileScreen = () => {
   const [profileData,setprofileData]=useState()
   const [rewardHistory,setrewardHistory]=useState()
   const [TransactionHistory,setTransactionHistory]=useState()
+  const {token}=useAppContext()
   useEffect(()=>{
     async function fetchProfileData(){
-      const token=await AsyncStorage.getItem('accessToken')
       await axios.get(`http://192.168.13.82:8000/api/v1/users/current-user`,{
         headers:{
           Authorization: `Bearer ${token}`
