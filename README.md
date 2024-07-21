@@ -2,7 +2,7 @@
 
 
 
-# Level Coin  ![Designer](https://github.com/user-attachments/assets/7d0a69f4-60b9-471e-909e-ab69164786d6)
+# ![Designer (1)](https://github.com/user-attachments/assets/7148df41-e319-4306-a45b-8defe6168302)           Level Coin  
 
 ### Level Coin with Diamante Blockchain Implementation.
 
