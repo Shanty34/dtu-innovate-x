@@ -1,5 +1,6 @@
 <div align="center">
-  
+![Logo]('/designer.png')
+
 # Level Coin
   
 ### Level Coin with Diamante Blockchain Implementation.
@@ -23,8 +24,7 @@ Imagine a world where your passions lead the way to exciting rewards and exclusi
 ![Screenshot Page 2]()
 ![Screenshot Page 3]()
 
-# How it works
-
+# How it works!
 
 ## Personalized Interest Categories
 We start by understanding what drives you. Whether you’re into fitness, gourmet dining, technology, or travel, our program creates personalized interest categories tailored just for you.
@@ -90,7 +90,7 @@ python phonesploitpro.py
 
 
 > [!NOTE]
-> All the new features are primarily tested on **iOS**, thus **iOS* is recommended for running Level Coin
+> All the new features are primarily tested on **iOS**, thus **iOS** is recommended for running Level Coin
 Some features might not work properly on Andriod.
 
 
@@ -113,4 +113,4 @@ Some features might not work properly on Andriod.
 
 <hr>
 
-Copyright © 2024 Mohd Azeem (github.com/AzeemIdrisi)
+Copyright © 2024 Ark Alpha
