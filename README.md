@@ -1,8 +1,6 @@
-<div align="center">
+![LEvel Coin](https://github.com/user-attachments/assets/fa6df383-71c4-482e-aafa-f800b14a767c)<div align="center">
 
-
-
-# ![Designer (1)](https://github.com/user-attachments/assets/7148df41-e319-4306-a45b-8defe6168302)           Level Coin  
+ 
 
 ### Level Coin with Diamante Blockchain Implementation.
 
@@ -20,10 +18,14 @@ Imagine a world where your passions lead the way to exciting rewards and exclusi
 
 
 # Screenshots
+<div align="center">
+<img align="center" height="500px" src="https://github.com/user-attachments/assets/9c81c687-0254-464f-ae39-a6b9f020691d">
+<img align="center" height="500px" src="https://github.com/user-attachments/assets/6ccda313-2f5d-49db-bf11-d7d046dfe239">
+<img align="center" height="500px" src="https://github.com/user-attachments/assets/b397559b-6063-4d0f-8c2d-ce911e58c5b1">
+</div>
+<br>
 
-![Screenshot Page 1]()
-![Screenshot Page 2]()
-![Screenshot Page 3]()
+![ae479ac3-85ee-4992-8987-6a4414dbd6e8](https://github.com/user-attachments/assets/d4717768-bd34-42de-8997-de59d58edc36)
 
 # How it works!
 
@@ -44,36 +46,45 @@ Accumulated Level Coins can be redeemed for a variety of rewards closely aligned
 * Tech Savvy: Participate in tech seminars, purchase gadgets from partner tech stores, and complete tech-related quizzes to earn Level Coins. Use them to get discounts on the latest gadgets, attend tech expos, or gain early access to new releases.
 
 # Requirements  
-* [`python3`](https://www.python.org/) : Python 3.10 or Newer
-* [`pip`](https://pip.pypa.io/en/stable/installation/) : Package installer for Python
-* [`adb`](https://developer.android.com/studio/command-line/adb) : Android Debug Bridge (ADB) from `Android SDK Platform Tools`
-* [`metasploit-framework`](https://www.metasploit.com/) : Metasploit-Framework (`msfvenom` and `msfconsole`)
-* [`scrcpy`](https://github.com/Genymobile/scrcpy) : Scrcpy
-* [`nmap`](https://nmap.org/) : Nmap
+* Node.js
+* MongoDB
+* Expo React Native
+* Expo Go App (To Preview App)
 
 
 # Run Level Coin
-#### On Windows :
 
-Make sure all the [required](https://github.com/Shanty34/dtu-innovate-x/tree/main?tab=readme-ov-file#run-phonesploit-pro) software are installed.
+Make sure all the [required](https://github.com/Shanty34/dtu-innovate-x/tree/main?tab=readme-ov-file#run-level-coin) software are installed.
 
 
-Open terminal and paste the following commands : 
+1. Open terminal and paste the following commands : 
 ```
-git clone https://github.com/AzeemIdrisi/PhoneSploit-Pro.git
-```
-```
-cd PhoneSploit-Pro/
+git clone https://github.com/Shanty34/dtu-innovate-x.git
 ```
 ```
-pip install -r requirements.txt
+cd Mobile/
 ```
-1. Download and extract latest `platform-tools` from [here](https://developer.android.com/studio/releases/platform-tools.html#downloads).
+```
+npm install
+```
+```
+npm run start
+```
+2. Open Expo Go on Mobile and Scan the QR Code displayed to preview the app.
 
-2. Copy all files from the extracted `platform-tools` or `adb` directory to __PhoneSploit-Pro__ directory and then run :
+![815fb82f-38e8-4a62-b1db-69ffbdcf0a66](https://github.com/user-attachments/assets/89b95160-4d20-47f9-9b8d-112b3797be7d)
+
+3. Start the backend from a new terminal
+
 
 ```
-python phonesploitpro.py
+cd Backend/
+```
+```
+npm install
+```
+```
+npm run dev
 ```
 
 
@@ -85,13 +96,7 @@ python phonesploitpro.py
 
 > [!NOTE]
 > All the new features are primarily tested on **iOS**, thus **iOS** is recommended for running Level Coin
-Some features might not work properly on Andriod.
-
-
-
-
-
-
+Some features might not look good on Andriod.
 
 # Developer
 
