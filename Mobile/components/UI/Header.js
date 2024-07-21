@@ -1,9 +1,29 @@
 import { View, Text, Image, Pressable } from "react-native";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { AntDesign } from "@expo/vector-icons";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import axios from "axios";
 const Header = () => {
   const navigation = useNavigation();
+  const [coin, setCoin]=useState(0)
+  useEffect(()=>{
+    async function getCurrentCoin(){
+      const token=await AsyncStorage.getItem('accessToken')
+      await axios.get(`http://192.168.13.82:8000/api/v1/users/current-user`,{
+        headers:{
+          Authorization: `Bearer ${token}`
+        }
+      })
+      .then((res)=>{
+        setCoin(res.data.data.coins)
+      })
+      .catch((err)=>{
+        console.log("Profile_Error:",err)
+      })
+    }
+    getCurrentCoin();
+  },[])
   return (
     <View
       style={{
@@ -69,7 +89,7 @@ const Header = () => {
             fontWeight: "bold",
           }}
         >
-          1328
+          {coin}
         </Text>
       </View>
     </View>

@@ -9,36 +9,45 @@ import { RewardTransaction } from "../models/rewardTransaction.models.js";
 import { Transaction } from "../models/transaction.models.js";
 
 const RewardHistory=asyncHandler(async (req, res) => {
-    const history=await User.aggregate([
+    const history = await User.aggregate([
         {
-            $match:{
-                _id:new mongoose.Types.ObjectId(req.user._id)
+            $match: {
+                _id: new mongoose.Types.ObjectId(req.user._id)
             }
         },
         {
-            $lookup:{
-                from:"rewardtransactions",
-                localField:"_id",
-                foreignField:"owner",
-                as:"rewardHistory",
-                pipeline:[
-                    {
-                        $lookup:{
-                            from:"rewards",
-                            localField:"reward",
-                            foreignField:"_id",
-                            as:"reward"
-                        }
-                        
-                    }
-                ]
+            $lookup: {
+                from: "rewardtransactions",
+                localField: "_id",
+                foreignField: "owner",
+                as: "rewardHistory"
             }
-        }
-    ])
+        },
+        {
+            $unwind: "$rewardHistory"
+        },
+        {
+            $lookup: {
+                from: "rewards",
+                localField: "rewardHistory.reward",
+                foreignField: "_id",
+                as: "reward"
+            }
+        },
+        {
+            $unwind: "$reward"
+        },
+        {
+            $replaceRoot: {
+                newRoot: "$reward"
+            }
+        },
+        
+    ]);
 
     if(!history) throw new ApiError(409,"Error Fetching Reward History");
     res.status(200)
-    .json(new ApiResponse(201,history[0].rewardHistory,"Reward History Fetched"))
+    .json(new ApiResponse(201,history,"Reward History Fetched"))
 })
 const RewardPost=asyncHandler(async(req,res)=>{
     const {title,description,coins,category,bg_color,task_id}=req.body;
@@ -179,17 +188,16 @@ const checkRewardCompleted=asyncHandler(async(req,res)=>{
 
 const postTransaction=asyncHandler(async(req,res)=>{
     const {trans_coin, transaction_title}=req.body;
-    if(!(trans_coin && transaction_title)) throw new piError(404,"Complete Transaction Details not given");
+    if(!(trans_coin && transaction_title)) throw new ApiError(404,"Complete Transaction Details not given");
     
     const user=await User.findById(req.user._id);
     if(!user) throw new ApiError(404,"User Not Found");
 
     const coin=user.coins-trans_coin;
-    if (coin<0) throw new ApiError(401,"Insufficent Level Coins for Transaction")
-    const result=User.updateOne({id:req.user._id},{coins:coin})
-
+    if (coin<0) throw new ApiError(401,"Insufficent Level Coins for Transaction");
+    const result=await User.findOneAndUpdate({_id:req.user._id},{coins:coin})
+    console.log(result)
     if(!result) throw new ApiError("Coins not updated");
-    res.status(201)
 
     const transaction=await Transaction.create({
         transaction_title,

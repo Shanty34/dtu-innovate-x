@@ -1,7 +1,8 @@
 import { View, Text, Pressable, Image } from "react-native";
 import React, { useState } from "react";
 
-const Cards = ({ onPress, imageUrl, title, description, isSelected }) => {
+const Cards = ({ onPress, imageUrl, title,bg_color,coins, description, isSelected }) => {
+  
   return (
     <View
       style={{
@@ -23,7 +24,7 @@ const Cards = ({ onPress, imageUrl, title, description, isSelected }) => {
         <View
           style={{
             width: "100%",
-            backgroundColor: "#ffffff97",
+            backgroundColor: bg_color? bg_color:"#ffffff97",
           }}
         >
           <Image
@@ -51,6 +52,17 @@ const Cards = ({ onPress, imageUrl, title, description, isSelected }) => {
             >
               {title}
             </Text>
+            {coins&&<Text
+              style={{
+                color: "black",
+                fontSize: 18,
+                fontWeight: "bold",
+                textAlign: "center",
+                marginTop: 5,
+              }}
+            >
+              {coins} LevelCoins
+            </Text>}
             <Text
               style={{
                 color: "black",

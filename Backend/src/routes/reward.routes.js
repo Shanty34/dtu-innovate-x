@@ -1,8 +1,7 @@
 import { Router } from "express";
 import {upload} from "../middlewares/multer.middleware.js"
 import { verifyJWT } from "../middlewares/auth.middleware.js";
-import { checkRewardCompleted, fetchRewardsByInterest, getReward, postRewardTrans, RewardHistory, RewardPost } from "../controllers/reward.controller.js";
-import { fetchRewardsByInterest, getAllTransactions, getReward, postRewardTrans, postTransaction, RewardHistory, RewardPost } from "../controllers/reward.controller.js";
+import { checkRewardCompleted, fetchRewardsByInterest, getAllTransactions, getReward, postRewardTrans, postTransaction, RewardHistory, RewardPost } from "../controllers/reward.controller.js";
 
 const router=Router()
 

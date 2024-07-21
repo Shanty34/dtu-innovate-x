@@ -2,6 +2,7 @@ import { View, Text, ImageBackground, ScrollView } from "react-native";
 import React from "react";
 import Header from "../components/UI/Header";
 import Cards from "../components/UI/Cards";
+import WalleConnect from "../components/WalletConnect/WalletConnect";
 
 const HomeScreen = () => {
   return (
@@ -15,6 +16,7 @@ const HomeScreen = () => {
       source={require("../assets/backgroundGradient.png")}
     >
       <Header />
+      {/* <WalleConnect/> */}
       <ScrollView horizontal style={{ maxHeight: 300 }}>
         <Cards />
         <Cards />
