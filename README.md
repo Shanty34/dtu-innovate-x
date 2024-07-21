@@ -52,17 +52,10 @@ Accumulated Level Coins can be redeemed for a variety of rewards closely aligned
 * [`nmap`](https://nmap.org/) : Nmap
 
 
-# Run PhoneSploit Pro 
-
-__PhoneSploit Pro__ does not need any installation and runs directly using `python3`
-
-> [!IMPORTANT]
-> **PhoneSploit Pro** requires Python version __3.10 or higher__. Please update Python before running the program.
-
-
+# Run Level Coin
 #### On Windows :
 
-Make sure all the [required](https://github.com/AzeemIdrisi/PhoneSploit-Pro#requirements) software are installed.
+Make sure all the [required](https://github.com/Shanty34/dtu-innovate-x/tree/main?tab=readme-ov-file#run-phonesploit-pro) software are installed.
 
 
 Open terminal and paste the following commands : 
@@ -102,10 +95,10 @@ Some features might not work properly on Andriod.
 
 # Developer
 
-<a href="https://github.com/azeemidrisi/">Azeem Idrisi</a>
-<a href="https://github.com/shanty34/">Shantanu Pant</a>
-<a href="https://github.com/MridulTi/">Mridul Tiwari</a>
-<a href="https://github.com/devanshe15/">Devanshe</a>
+<a href="https://github.com/azeemidrisi/">Azeem Idrisi</a> <br>
+<a href="https://github.com/shanty34/">Shantanu Pant</a> <br>
+<a href="https://github.com/MridulTi/">Mridul Tiwari</a> <br>
+<a href="https://github.com/devanshe15/">Devanshe</a> <br>
 <a href="https://github.com/Prashant2002pd/">Prashant Singh</a>
 
 
