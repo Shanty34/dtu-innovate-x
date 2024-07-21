@@ -16,12 +16,12 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useAppContext } from "../context/UserContext";
 
 const LoginScreen = ({ navigation }) => {
-  const {setToken}=useAppContext()
+  const { setToken } = useAppContext();
   useEffect(() => {
     async function checkToken() {
       const token = await AsyncStorage.getItem("accessToken");
       if (token) {
-        setToken(token)
+        setToken(token);
         console.log("Navigating to product page from useEffect");
         navigation.replace("OnboardingScreen");
       }
@@ -36,9 +36,9 @@ const LoginScreen = ({ navigation }) => {
       email: email,
       password: password,
     };
-    console.log(user)
+    console.log(user);
     axios
-      .post("http:// 192.168.13.82:8000/api/v1/users/login", user)
+      .post("http://192.168.106.45:8000/api/v1/users/login", user)
       .then((response) => {
         const token = response.data.data.accessToken;
         const reftoken = response.data.data.refreshToken;
@@ -51,7 +51,7 @@ const LoginScreen = ({ navigation }) => {
             navigation.replace("OnboardingScreen");
           })
         );
-
+        setToken(token);
         //Navigating to Home Screen
       })
       .catch((e) => {
@@ -59,6 +59,27 @@ const LoginScreen = ({ navigation }) => {
         Alert.alert("Login error", "Invalid Email or Password");
       });
   }
+  const { coin, setCoin } = useAppContext();
+
+  useEffect(() => {
+    async function getCurrentCoin() {
+      const token = await AsyncStorage.getItem("accessToken");
+      await axios
+        .get(`http://192.168.106.45:8000/api/v1/users/current-user`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .then((res) => {
+          console.log("Login screen response : ", res.data.data.coins);
+          setCoin(res.data.data.coins);
+        })
+        .catch((err) => {
+          console.log("Profile_Error:", err);
+        });
+    }
+    getCurrentCoin();
+  }, []);
   return (
     <ImageBackground
       style={{

@@ -13,7 +13,7 @@ const UserItem = ({ item }) => {
     async function fetchUserFriends() {
       try {
         const response = await axios.get(
-          "http://192.168.1.7:8000/all-friends/" + userID
+          "http://192.168.106.45:8000/all-friends/" + userID
         );
         if (response.data.success) {
           setUserFriends(response.data.allFriends);
@@ -29,7 +29,7 @@ const UserItem = ({ item }) => {
     async function fetchFriendRequests() {
       try {
         const response = await axios.get(
-          "http://192.168.1.7:8000/sent-requests/" + userID
+          "http://192.168.106.45:8000/sent-requests/" + userID
         );
         if (response.data.success) {
           setFriendRequests(response.data.sentRequests);
@@ -44,7 +44,7 @@ const UserItem = ({ item }) => {
   async function sendFriendRequest(currentUserID, selectedUserID) {
     try {
       const response = await axios.post(
-        "http://192.168.1.7:8000/friend-request",
+        "http://192.168.106.45:8000/friend-request",
         {
           currentUserID,
           selectedUserID,

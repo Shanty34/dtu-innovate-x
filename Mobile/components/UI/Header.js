@@ -1,5 +1,5 @@
 import { View, Text, Image, Pressable } from "react-native";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useLayoutEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { AntDesign } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -7,25 +7,9 @@ import axios from "axios";
 import { useAppContext } from "../../context/UserContext";
 const Header = () => {
   const navigation = useNavigation();
-  const {coin, setCoin}=useAppContext()
-  useEffect(()=>{
-    async function getCurrentCoin(){
-      const token=await AsyncStorage.getItem('accessToken')
-      await axios.get(`http://192.168.13.82:8000/api/v1/users/current-user`,{
-        headers:{
-          Authorization: `Bearer ${token}`
-        }
-      })
-      .then((res)=>{
-        console.log(res.data.data.coins)
-        setCoin(res.data.data.coins)
-      })
-      .catch((err)=>{
-        console.log("Profile_Error:",err)
-      })
-    }
-    getCurrentCoin();
-  },[coin])
+  const { coin, setCoin } = useAppContext();
+
+  console.log("Header", coin);
   return (
     <View
       style={{
