@@ -39,9 +39,9 @@ By participating in tasks, attending events, or engaging with partner brands, yo
 ## Redeeming Rewards
 Accumulated Level Coins can be redeemed for a variety of rewards closely aligned with your interests. Whether it’s VIP access to events, discounts on premium products, or exclusive experiences, there’s always something exciting to choose from.
 
-##Example Scenarios
+## Example Scenarios
 * Fitness Enthusiast: Attend fitness classes, purchase sports gear from partner brands, and complete health challenges to earn Level Coins. Redeem them for free gym memberships, fitness retreats, or personalized training sessions.
-*Tech Savvy: Participate in tech seminars, purchase gadgets from partner tech stores, and complete tech-related quizzes to earn Level Coins. Use them to get discounts on the latest gadgets, attend tech expos, or gain early access to new releases.
+* Tech Savvy: Participate in tech seminars, purchase gadgets from partner tech stores, and complete tech-related quizzes to earn Level Coins. Use them to get discounts on the latest gadgets, attend tech expos, or gain early access to new releases.
 
 # Requirements  
 * [`python3`](https://www.python.org/) : Python 3.10 or Newer
