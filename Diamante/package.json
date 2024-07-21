@@ -1,0 +1,21 @@
+{
+  "name": "diamante",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.20.2",
+    "cors": "^2.8.5",
+    "diamante-base": "^1.0.0",
+    "diamante-sdk-js": "^1.0.3",
+    "express": "^4.19.2",
+    "horizon": "^2.0.0",
+    "node-fetch": "^3.3.2"
+  }
+}

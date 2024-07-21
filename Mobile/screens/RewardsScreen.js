@@ -10,10 +10,10 @@ const RewardsScreen = () => {
   const {coin,setCoin,token}=useAppContext()
   useEffect(()=>{
     async function fetchRewardsByInterest(){
-      console.log(token)
-      await axios.get(`http://192.168.13.82:8000/api/v1/reward/fetch-reward-interest`,{
+      const atoken=await AsyncStorage.getItem("accessToken")
+      await axios.get(`http://192.168.106.82:8000/api/v1/reward/fetch-reward-interest`,{
         headers:{
-          Authorization: `Bearer ${token}`
+          Authorization: `Bearer ${atoken}`
         }
       })
       .then((res)=>{
@@ -28,16 +28,28 @@ const RewardsScreen = () => {
   },[])
 
   async function postCompleteReward(data){
-    await axios.post(`http://192.168.13.82:8000/api/v1/reward/reward-completed`,
+    const atoken=await AsyncStorage.getItem("accessToken")
+    await axios.post(`http://192.168.106.82:8000/api/v1/reward/reward-transac`,{reward_id:data._id,task_id:"669bca3c39ad9035120ff2ce"},
+      {
+      headers:{
+        Authorization: `Bearer ${atoken}`
+      }})
+    .then(res=>{
+      console.log("Reward Transaction Generated")
+    })
+    .catch(err=>{
+      console.log("Reward Transaction Error :",err)
+    })
+    await axios.post(`http://192.168.106.82:8000/api/v1/reward/reward-completed`,
       {reward_id:data._id},
       {
       headers:{
-        Authorization: `Bearer ${token}`
+        Authorization: `Bearer ${atoken}`
       }
     })
     .then((res)=>{
       // console.log(res.data.data)
-      setCoin(res.data.data.coin)
+      setCoin(res.data.data.coins)
     })
     .catch((err)=>{
       console.log("Complete_Reward_Error :",err)

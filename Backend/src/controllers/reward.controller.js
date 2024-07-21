@@ -104,19 +104,20 @@ const getReward=asyncHandler(async(req,res)=>{
 
 const postRewardTrans=asyncHandler(async(req,res)=>{
     const{reward_id,task_id}=req.body;
+    let user;
+    user=await RewardTransaction.findOne({reward:reward_id,owner:req.user._id});
 
     if(!task_id) throw new ApiError(402,"Atleast One Task must be completed");
     if(!(reward_id )) throw new ApiError(402,"Reward Id not Defined");
     const TaskArray = task_id ? task_id.split(',') : [];
-
-    const rewardTransac=await RewardTransaction.create({
+    if(!user){
+    user=await RewardTransaction.create({
         owner:req.user._id,
         reward:reward_id,
         taskCompleted:TaskArray
-    })
-
+    })}
     res.status(201)
-    .json(new ApiResponse(201,rewardTransac,"Reward Transaction Created"));
+    .json(new ApiResponse(201,user,"Reward Transaction Created"));
     
 })
 
@@ -131,16 +132,12 @@ const fetchRewardsByInterest=asyncHandler(async(req,res)=>{
 
 const checkRewardCompleted=asyncHandler(async(req,res)=>{
     const {reward_id}=req.body;
-//    const currentReward = await RewardTransaction.findOne({reward:req.body.reward_id,owner:req.user._id});
-//    if(!currentReward) throw new ApiError(404,"NO reward found");
-
-//    if(currentReward.completed==true){
         const new_coins=await RewardTransaction.aggregate([
             {
                 $match:{
                     reward:new mongoose.Types.ObjectId(reward_id),
                     owner:new mongoose.Types.ObjectId(req.user._id),
-                    completed:true
+                    
                 }
 
             },
@@ -168,12 +165,16 @@ const checkRewardCompleted=asyncHandler(async(req,res)=>{
             },
             {
                 $addFields:{
-                    updatedcoins:{ $add: ["$user.coins", "$rewardTool.coins"] }
+                    taskCompletedLength: { $size: "$taskCompleted" },
+                    taskIdLength: { $size: "$rewardTool.task_id" },
+                    updatedcoins: { $add: ["$user.coins", "$rewardTool.coins"] },
+                    isCompleted: { $eq: ["$taskCompletedLength", "$taskIdLength"] }
                 }
             },
             {
                 $project:{
-                    updatedcoins:1
+                    updatedcoins:1,
+                    isCompleted:1
                 }
             }
         ])

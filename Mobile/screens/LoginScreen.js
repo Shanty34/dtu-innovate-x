@@ -38,7 +38,7 @@ const LoginScreen = ({ navigation }) => {
     };
     console.log(user)
     axios
-      .post("http:// 192.168.13.82:8000/api/v1/users/login", user)
+      .post("http://192.168.106.82:8000/api/v1/users/login", user)
       .then((response) => {
         const token = response.data.data.accessToken;
         const reftoken = response.data.data.refreshToken;

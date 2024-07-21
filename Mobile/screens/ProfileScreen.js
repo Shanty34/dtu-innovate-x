@@ -12,9 +12,11 @@ const ProfileScreen = () => {
   const {token}=useAppContext()
   useEffect(()=>{
     async function fetchProfileData(){
-      await axios.get(`http://192.168.13.82:8000/api/v1/users/current-user`,{
+      const atoken=await AsyncStorage.getItem("accessToken")
+
+      await axios.get(`http://192.168.106.82:8000/api/v1/users/current-user`,{
         headers:{
-          Authorization: `Bearer ${token}`
+          Authorization: `Bearer ${atoken}`
         }
       })
       .then((res)=>{
@@ -29,7 +31,7 @@ const ProfileScreen = () => {
 
   async function getRewardHistory(){
     const token=await AsyncStorage.getItem('accessToken')
-    axios.get(`http://192.168.13.82:8000/api/v1/reward/reward-history`,{
+    axios.get(`http://192.168.106.82:8000/api/v1/reward/reward-history`,{
       headers:{
         Authorization: `Bearer ${token}`
       }
@@ -43,7 +45,7 @@ const ProfileScreen = () => {
   }
   async function getTransactionHistory(){
     const token=await AsyncStorage.getItem('accessToken')
-    axios.get(`http://192.168.13.82:8000/api/v1/reward/all-transactions`,{
+    axios.get(`http://192.168.106.82:8000/api/v1/reward/all-transactions`,{
       headers:{
         Authorization: `Bearer ${token}`
       }

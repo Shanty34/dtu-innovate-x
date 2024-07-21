@@ -11,7 +11,7 @@ const Header = () => {
   useEffect(()=>{
     async function getCurrentCoin(){
       const token=await AsyncStorage.getItem('accessToken')
-      await axios.get(`http://192.168.13.82:8000/api/v1/users/current-user`,{
+      await axios.get(`http://192.168.106.82:8000/api/v1/users/current-user`,{
         headers:{
           Authorization: `Bearer ${token}`
         }

@@ -37,7 +37,7 @@ const RewardsScreen = () => {
   const [postTrans,setpostTransaction]=useState()
     async function postTransaction(data){
       const token=await AsyncStorage.getItem('accessToken')
-      await axios.post(`http://192.168.13.82:8000/api/v1/reward/post-transaction`,
+      await axios.post(`http://192.168.106.82:8000/api/v1/reward/post-transaction`,
         {
           trans_coin:data.coins,
           transaction_title:data.title
