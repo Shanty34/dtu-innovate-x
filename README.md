@@ -1,8 +1,9 @@
 <div align="center">
-![Logo]('/designer.png')
 
-# Level Coin
-  
+
+
+# Level Coin  ![Designer](https://github.com/user-attachments/assets/7d0a69f4-60b9-471e-909e-ab69164786d6)
+
 ### Level Coin with Diamante Blockchain Implementation.
 
 Level up brand loyalty programs with personalised tasks and tokenized rewards.
