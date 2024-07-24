@@ -1,5 +1,5 @@
 import { View, Text, ImageBackground, ScrollView } from "react-native";
-import React,{useState,useEffect, useContext} from "react";
+import React, { useState, useEffect, useContext } from "react";
 import Header from "../components/UI/Header";
 import Cards from "../components/UI/Cards";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -25,8 +25,9 @@ const RewardsScreen = () => {
       })
     }
     fetchRewardsByInterest();
-  },[])
+  }, []);
 
+<<<<<<< HEAD
   async function postCompleteReward(data){
     const atoken=await AsyncStorage.getItem("accessToken")
     await axios.post(`http://192.168.106.82:8000/api/v1/reward/reward-transac`,{reward_id:data._id,task_id:"669bca3c39ad9035120ff2ce"},
@@ -67,9 +68,17 @@ const RewardsScreen = () => {
     >
       <Header />
       <ScrollView>
-       {rewards && rewards.map((data,i)=>(
-        <Cards onPress={(e)=>postCompleteReward(data)} key={i} title={data.title} bg_color={data.bg_color} description={data.description} imageUrl={data.image} />
-       ))}
+        {rewards &&
+          rewards.map((data, i) => (
+            <Cards
+              onPress={(e) => postCompleteReward(data)}
+              key={i}
+              title={data.title}
+              bg_color={data.bg_color}
+              description={data.description}
+              imageUrl={data.image}
+            />
+          ))}
       </ScrollView>
     </ImageBackground>
   );

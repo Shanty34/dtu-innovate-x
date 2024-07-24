@@ -36,7 +36,7 @@ const RegisterScreen = ({ navigation }) => {
       //if the message type id image or a normal text
 
       const response = await axios.post(
-        "http://192.168.13.45:8000/api/v1/users/register",
+        "http://192.168.106.45:8000/api/v1/users/register",
         formData
       );
 
@@ -72,7 +72,7 @@ const RegisterScreen = ({ navigation }) => {
 
     // Sending POST Request to Register a new user
     axios
-      .post("http://192.168.1.7:8000/register", user)
+      .post("http://192.168.106.45:8000/register", user)
       .then((response) => {
         console.log(response);
         Alert.alert(

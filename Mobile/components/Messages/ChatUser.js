@@ -13,7 +13,7 @@ const ChatUser = ({ item }) => {
     async function fetchMessages() {
       try {
         const response = await axios.get(
-          `http://192.168.1.7:8000/messages/${userID}/${item._id}`
+          `http://192.168.106.45:8000/messages/${userID}/${item._id}`
         );
 
         if (response.data.success) {

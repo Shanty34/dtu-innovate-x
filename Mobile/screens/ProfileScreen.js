@@ -1,7 +1,7 @@
 import { View, Text, Image } from "react-native";
 import React, { useEffect, useState } from "react";
 import Button from "../components/UI/Button";
-import axios from "axios"; 
+import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useAppContext } from "../context/UserContext";
 
@@ -27,7 +27,7 @@ const ProfileScreen = () => {
       })
     }
     fetchProfileData();
-  },[])
+  }, []);
 
   async function getRewardHistory(){
     const token=await AsyncStorage.getItem('accessToken')
@@ -57,37 +57,45 @@ const ProfileScreen = () => {
       console.log("Reward_Error:",err)
     })
   }
-  
+
   return (
     <View>
-      {profileData &&(
+      {profileData && (
         <View>
-        <Text>@{profileData.username}</Text>
-        <Text>{profileData.fullname}</Text>
-        <Image style={{width:50,height:50,borderRadius:50}} source={{uri:profileData.avatar}}/>
-        <Text>LevelCoins: ${profileData.coins}</Text>
-        <Button onPress={getRewardHistory}>Reward History</Button>
-        <Button onPress={getTransactionHistory}>Transaction History</Button>
+          <Text>@{profileData.username}</Text>
+          <Text>{profileData.fullname}</Text>
+          <Image
+            style={{ width: 50, height: 50, borderRadius: 50 }}
+            source={{ uri: profileData.avatar }}
+          />
+          <Text>LevelCoins: ${profileData.coins}</Text>
+          <Button onPress={getRewardHistory}>Reward History</Button>
+          <Button onPress={getTransactionHistory}>Transaction History</Button>
         </View>
       )}
-      {rewardHistory&&rewardHistory.map(data=>{
-        return(
-          <View key={data._id}>
-            {/* <Text>{data.completed==true?"Completed":"Ongoing"}</Text> */}
-            <Text>{data.title}</Text>
-          <Image style={{width:50,height:50,borderRadius:50}} source={{uri:data.image}}/>
-            <Text>{data.coins}</Text>
-          </View>
-        )
-      })}
-      {TransactionHistory&&TransactionHistory.map(data=>{
-        return(
-          <View key={data._id}>
-            <Text>{data.transaction_title}</Text>
-            <Text>{data.trans_coin}</Text>
-          </View>
-        )
-      })}
+      {rewardHistory &&
+        rewardHistory.map((data) => {
+          return (
+            <View key={data._id}>
+              {/* <Text>{data.completed==true?"Completed":"Ongoing"}</Text> */}
+              <Text>{data.title}</Text>
+              <Image
+                style={{ width: 50, height: 50, borderRadius: 50 }}
+                source={{ uri: data.image }}
+              />
+              <Text>{data.coins}</Text>
+            </View>
+          );
+        })}
+      {TransactionHistory &&
+        TransactionHistory.map((data) => {
+          return (
+            <View key={data._id}>
+              <Text>{data.transaction_title}</Text>
+              <Text>{data.trans_coin}</Text>
+            </View>
+          );
+        })}
     </View>
   );
 };

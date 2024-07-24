@@ -132,11 +132,13 @@ const fetchRewardsByInterest=asyncHandler(async(req,res)=>{
 
 const checkRewardCompleted=asyncHandler(async(req,res)=>{
     const {reward_id}=req.body;
+    
         const new_coins=await RewardTransaction.aggregate([
             {
                 $match:{
                     reward:new mongoose.Types.ObjectId(reward_id),
                     owner:new mongoose.Types.ObjectId(req.user._id),
+                    completed:true
                     
                 }
 
@@ -165,10 +167,7 @@ const checkRewardCompleted=asyncHandler(async(req,res)=>{
             },
             {
                 $addFields:{
-                    taskCompletedLength: { $size: "$taskCompleted" },
-                    taskIdLength: { $size: "$rewardTool.task_id" },
                     updatedcoins: { $add: ["$user.coins", "$rewardTool.coins"] },
-                    isCompleted: { $eq: ["$taskCompletedLength", "$taskIdLength"] }
                 }
             },
             {

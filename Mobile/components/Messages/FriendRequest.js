@@ -10,7 +10,7 @@ const FriendRequest = ({ item, friendRequests, sentFriendRequests }) => {
   async function acceptRequest(id) {
     try {
       const response = await axios.post(
-        "http://192.168.1.7:8000/friend-request/accept",
+        "http://192.168.106.45:8000/friend-request/accept",
         {
           currentUserID: userID,
           selectedUserID: id,
